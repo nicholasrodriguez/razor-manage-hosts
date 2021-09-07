@@ -1,0 +1,16 @@
+---
+- name: Set full FQDN var
+  set_fact:
+     fqdn: "{{ hostname }}.{{ domain }}"
+  tags:
+    - always
+
+- name: Delete Policy
+  shell: "/usr/local/bin/razor delete-policy --name {{ hostname }}"
+  tags:
+    - delete_policy
+
+- name: Delete Tag
+  shell: "/usr/local/bin/razor delete-tag --name {{ hostname }}"
+  tags:
+    - delete_tag

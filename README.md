@@ -1,38 +1,137 @@
-Role Name
-=========
+# Ansible Role: Razor Manage Hosts
 
-A brief description of the role goes here.
+An Ansible Role that manages hosts in Puppet Razor on Linux. It provides the following interactive functionality:
 
-Requirements
-------------
+* Add a host to Razor for provisioning
+* Remove a host from Razor
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Razor Summary
 
-Role Variables
---------------
+Puppet Razor Server is an Open Source Operating System provisioning tool, details are here:
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+[https://github.com/puppetlabs/razor-server/wiki]
 
-Dependencies
-------------
+# Requirements
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This Role was built and tested after the following Ansible Galaxy Roles were deployed but could be used for other Razor deployments, ensure the Tasks and Repos exist that the host is being configured with:
 
-Example Playbook
-----------------
+* nicholasrodriguez.razor
+* nicholasrodriguez.razor_tasks_esxi
+* nicholasrodriguez.razor_tasks_centos
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The metadata being injected into the host being managed in Razor via this Role aligns with the following personal lab Repo:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+[https://github.com/nicholasrodriguez/lab]
 
-License
--------
+Hosts being managed in Razor need to be resolvable by the Ansible Controller, you can use the shortname or FQDN.
 
-BSD
+# Role Variables
 
-Author Information
-------------------
+The following vars are all defined per managed host instance. Example values are listed below.
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Mode of operation:
+```
+add_or_delete: add
+```
+
+Short hostname of the host being managed in Razor:
+```
+hostname: lvm01
+```
+
+Razor Repo name:
+```
+repo: "CentOS-8.2-minimal"
+```
+
+Razor Task name:
+```
+task: "centos/8.2"
+```
+
+Razor Broker name:
+```
+broker: "noop"
+```
+
+Root password of the host being managed in Razor:
+```
+root_password: "Password123"
+```
+
+1st DNS Server
+```
+dns1: "1.1.1.1"
+```
+
+2nd DNS server
+```
+dns2": "1.0.0.1"
+```
+
+Time Server
+```
+time1: "ntp.pool.org"
+```
+
+Primary Interface IP address
+```
+ipaddress: "{{ hostvars[hostname]['ipaddress'] }}
+```
+
+Primary Interface Network gateway
+```
+gateway: "192.168.1.1"
+```
+
+Primary Interface Netmask
+```
+netmask: "255.255.255.0"
+```
+
+Primary Interface name:
+```
+mgmt_nic: "ens33"
+```
+
+Administration User name
+```
+user_name: "Bob"
+```
+
+Administration User Password
+```
+user_password: "Password123!"
+```
+# Dependencies
+
+None.
+
+# Example Playbook
+
+This role is better suited to being interactive as per the prompts in the example below. The vars could be fed by other methods if preferred.
+
+```
+- name: Manage Razor Hosts
+  connection: ssh
+  gather_facts: true
+  hosts: razor
+  become: True
+  roles:
+    - razor_manage_hosts
+  vars_prompt:
+    - name: add_or_delete
+      prompt: "Add or Delete a host in Razor [add/del]?"
+      private: no
+    - name: hostname
+      prompt: "What is the hostname of the server?"
+      private: no
+```
+
+# License
+
+MIT
+
+# Author Information
+
+- https://github.com/nicholasrodriguez/ (maintainer)

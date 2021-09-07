@@ -1,0 +1,22 @@
+{
+"name": "{{ hostname }}",
+"repo": "{{ hostvars[hostname]['repo'] }}",
+"task": "{{ hostvars[hostname]['task'] }}",
+"broker": "{{ hostvars[hostname]['broker'] }}",
+"enabled": true,
+"hostname": "{{ fqdn }}",
+"root_password": "{{ hostvars[hostname]['root_pw'] }}",
+"max_count": 1,
+"tags": ["{{ hostname }}"],
+"node_metadata": {
+    "dns1": "{{ dns1 }}",
+    "dns2": "{{ dns2 }}",
+    "time1": "{{ time1 }}",
+    "gateway": "{{ lab_subnet | ipaddr(1) | ipaddr('address') }}",
+    "ipaddress": "{{ hostvars[hostname]['ipaddress'] }}",
+    "netmask": "{{ lab_subnet | ipaddr('netmask') }}",
+    "mgmt_nic": "{{ hostvars[hostname]['mgmt_nic'] }}",
+    "user_name": "{{ lookup('env','LAB_USER') }}",
+    "user_password": "{{ hostvars[hostname]['user_pw'] }}"
+    }
+}
