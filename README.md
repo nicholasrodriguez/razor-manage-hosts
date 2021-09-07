@@ -76,7 +76,7 @@ time1: "ntp.pool.org"
 
 Primary Interface IP address
 ```
-ipaddress: "{{ hostvars[hostname]['ipaddress'] }}
+ipaddress: "192.168.1.10"
 ```
 
 Primary Interface Network gateway
