@@ -1,2 +1,8 @@
 ---
-# tasks file for razor-manage-hosts
+- name: Add host to Razor
+  include_tasks: add_host.yaml
+  when: add_or_delete == "add"
+
+- name: Delete host from Razor
+  include_tasks: delete_host.yaml
+  when: add_or_delete == "del"
