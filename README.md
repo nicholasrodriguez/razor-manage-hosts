@@ -1,8 +1,8 @@
 # Ansible Role: Razor Manage Hosts
 
-An Ansible Role that manages hosts in Puppet Razor on Linux. It provides the following interactive functionality:
+An Ansible Role that manages hosts in Puppet Razor on Linux. It provides the following functionality:
 
-* Add a host to Razor for provisioning
+* Add a host to Razor for OS provisioning
 * Remove a host from Razor
 
 ## Razor Summary
@@ -23,11 +23,11 @@ The metadata being injected into the host being managed in Razor via this Role a
 
 [https://github.com/nicholasrodriguez/lab]
 
-Hosts being managed in Razor need to be resolvable by the Ansible Controller, you can use the shortname or FQDN.
+Hosts being managed in Razor needs to be resolvable by the Ansible Controller, you can use the shortname or FQDN.
 
 # Role Variables
 
-The following vars are all defined per managed host instance. Example values are listed below.
+The Role will target the Razor server so the following vars are all defined per managed host instance. i.e. the target host you want Razor to build therefore this Role will lookup the vars below against that target host in your inventory. Example values are listed below.
 
 Mode of operation:
 ```
@@ -56,7 +56,7 @@ broker: "noop"
 
 Root password of the host being managed in Razor:
 ```
-root_password: "Password123"
+root_pw: "Password123"
 ```
 
 1st DNS Server
@@ -72,6 +72,16 @@ dns2": "1.0.0.1"
 Time Server
 ```
 time1: "ntp.pool.org"
+```
+
+The domain name of the Server
+```
+domain: "testlab.local"
+```
+
+The serial number of the server to be built.
+```
+serial_number: "VMware-56 4d cd 0b 9d 4d e2 ca-23 88 34 45 95 b8 0f 0f"
 ```
 
 Primary Interface IP address
@@ -91,7 +101,7 @@ netmask: "255.255.255.0"
 
 Primary Interface name:
 ```
-mgmt_nic: "ens33"
+mgmt_nic: "ens192"
 ```
 
 Administration User name
