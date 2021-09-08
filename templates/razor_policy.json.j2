@@ -9,14 +9,14 @@
 "max_count": 1,
 "tags": ["{{ hostname }}"],
 "node_metadata": {
-    "dns1": "{{ dns1 }}",
-    "dns2": "{{ dns2 }}",
-    "time1": "{{ time1 }}",
-    "gateway": "{{ lab_subnet | ipaddr(1) | ipaddr('address') }}",
+    "dns1": "{{ hostvars[hostname]['dns1'] }}",
+    "dns2": "{{ hostvars[hostname]['dns2'] }}",
+    "time1": "{{ hostvars[hostname]['time1'] }}",
+    "gateway": "{{ hostvars[hostname]['gateway'] }}",
     "ipaddress": "{{ hostvars[hostname]['ipaddress'] }}",
-    "netmask": "{{ lab_subnet | ipaddr('netmask') }}",
+    "netmask": "{{ hostvars[hostname]['netmask'] }}",
     "mgmt_nic": "{{ hostvars[hostname]['mgmt_nic'] }}",
-    "user_name": "{{ lookup('env','LAB_USER') }}",
+    "user_name": "{{ hostvars[hostname]['user_name'] }}",
     "user_password": "{{ hostvars[hostname]['user_pw'] }}"
     }
 }
